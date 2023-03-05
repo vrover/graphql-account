@@ -18,7 +18,7 @@ jobs:
 
   publish_schema:
     name: Publish new schema to Apollo Studio
-    needs: [ deploy, get_subgraph_name ]
+    needs: [ get_subgraph_name ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
