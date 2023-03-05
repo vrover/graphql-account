@@ -1,4 +1,4 @@
-name: Deploy
+name: Publish Schema
 on:
   push:
     branches:
@@ -10,11 +10,11 @@ jobs:
     if: false
     uses: ./.github/workflows/apollo.yaml
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        run: echo "::warning file=.github/workflows/deploy.yaml,line=10,endLine=14,title=No Deploy step defined::Define your custom workflow for deploying your subgraph here."
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy
+  #       run: echo "::warning file=.github/workflows/deploy.yaml,line=10,endLine=14,title=No Deploy step defined::Define your custom workflow for deploying your subgraph here."
 
   publish_schema:
     name: Publish new schema to Apollo Studio

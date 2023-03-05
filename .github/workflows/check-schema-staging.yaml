@@ -1,4 +1,4 @@
-name: Tests and Checks
+name: Check Schema
 on:
   push:
     branches:
