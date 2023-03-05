@@ -24,11 +24,11 @@ jobs:
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: npm install
-      - name: Build & start server
+      - name: Build & codegen
         run: npm run codegen && tsc
       - name: Start server
         run: npm run start & sleep 10
       - name: Publish Schema
         run: rover subgraph introspect http://localhost:4000 |
-             rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --routing-url ${{ secrets.STAGING_URL }} --schema -
+             rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --routing-url https://vrover-conf-account-staging.herokuapp.com/ --schema -
           # APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}

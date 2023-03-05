@@ -1,0 +1,19 @@
+name: Staging Deploy
+
+# This job is triggered manually in the GitHub UI
+on: workflow_dispatch
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy account subgrapgh to staging environment
+        uses: akhileshns/heroku-deploy@v3.12.13
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: vrover-conf-account-staging
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          remote_branch: "master"
+        env:
+          HD_MONGO_CONF_PASSWORD: ${{secrets.MONGO_CONF_PASSWORD}}
