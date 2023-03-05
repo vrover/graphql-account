@@ -1,18 +1,16 @@
-name: Check Schema
+name: Staging Check Schema
 on:
-  workflow_call:
+  push:
+    branches:
+      - master
 jobs:
-  get_subgraph_name:
-    if: false
-    uses: ./.github/workflows/apollo.yaml
-
   check_schema:
     name: Check Schema with Apollo Studio
-    needs: [ get_subgraph_name ]
     runs-on: ubuntu-latest
     env:
       APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
       APOLLO_GRAPH_ID: super-graph-t73mnd
+      SUBGRAPH: account
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -29,7 +27,7 @@ jobs:
         run: npm run codegen && tsc &&  npm run start
       - name: Introspect and run check
         run: rover subgraph introspect http://localhost:4000 |
-             rover subgraph check ${APOLLO_GRAPH_ID}@staging --name ${{ needs.get_subgraph_name.outputs.name }} --schema -
+             rover subgraph check ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --schema -
   # test:
   #   name: Test
   #   runs-on: ubuntu-latest
