@@ -23,8 +23,10 @@ jobs:
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: npm install
-      - name: Build & start server
-        run: npm run codegen && tsc &&  npm run start
+      - name: Build & codegen
+        run: npm run codegen && tsc
+      - name: Start server
+        run: npm run start & sleep 10
       - name: Introspect and run check
         run: rover subgraph introspect http://localhost:4000 |
              rover subgraph check ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --schema -
