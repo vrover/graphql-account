@@ -1,0 +1,12 @@
+overwrite: true
+schema: src/**/*.schema.ts
+generates:
+  ./src/generated/generatedTypes.ts:
+    config:
+      federation: true
+      scalars:
+        JSON: '{ [key: string]: any }'
+        DateTime: Date
+    plugins:
+      - typescript
+      - typescript-resolvers
