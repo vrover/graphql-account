@@ -1,5 +1,5 @@
 import {buildSubgraphSchema} from "@apollo/subgraph";
-import {ApolloServer, ContextFunction} from "@apollo/server";
+import {ApolloServer} from "@apollo/server";
 import {
   startStandaloneServer,
 } from "@apollo/server/standalone";
