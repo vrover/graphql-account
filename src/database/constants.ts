@@ -1,4 +1,4 @@
-const TOKEN_SECRET_KEY = 'decipher';
+const TOKEN_SECRET_KEY = process.env.PW_DECIPHER;
 const USER = 'user';
 const ROOM = 'room';
 const BOOKING = 'booking';
