@@ -1,19 +1,35 @@
 name: Staging Deploy
 
 # This job is triggered manually in the GitHub UI
+# on: workflow_dispatch
+# jobs:
+#   deploy:
+#     if: github.actor == 'vrover'
+#     name: Deploy to staging
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Deploy account subgrapgh to staging environment
+#         uses: akhileshns/heroku-deploy@v3.12.13
+#         with:
+#           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+#           heroku_app_name: vrover-conf-account-staging
+#           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+#           branch: "master"
+#         env:
+#           HD_MONGO_CONF_PASSWORD: ${{secrets.MONGO_CONF_PASSWORD}}
+
 on: workflow_dispatch
 jobs:
   deploy:
-    name: Deploy to production
+    if: github.actor == 'vrover'
+    name: Deploy to staging
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Deploy account subgrapgh to staging environment
-        uses: akhileshns/heroku-deploy@v3.12.13
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: vrover-conf-account-staging
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          remote_branch: "master"
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
         env:
-          HD_MONGO_CONF_PASSWORD: ${{secrets.MONGO_CONF_PASSWORD}}
+          MONGO_CONF_PASSWORD: ${{secrets.MONGO_CONF_PASSWORD}}
