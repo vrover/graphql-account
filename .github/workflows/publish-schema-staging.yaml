@@ -31,5 +31,5 @@ jobs:
       - name: Publish Schema
         run:
           rover subgraph introspect http://localhost:4001 |
-          rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --routing-url https://vrover-conf-account-staging.herokuapp.com/ --schema -
+          rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --routing-url https://graphql-account.onrender.com/ --schema -
           # APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
