@@ -1,7 +1,7 @@
 name: Staging Publish Schema
 on:
   workflow_run:
-    workflows: ['Staging Check Schema']
+    workflows: ["Staging Check Schema"]
     types:
       - completed
 jobs:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
-      APOLLO_GRAPH_ID: super-graph-t73mnd
+      APOLLO_GRAPH_ID: ${{ secrets.APOLLO_GRAPH_ID }}
       SUBGRAPH: account
     steps:
       - uses: actions/checkout@v3
@@ -29,6 +29,7 @@ jobs:
       - name: Start server
         run: npm run start & sleep 10
       - name: Publish Schema
-        run: rover subgraph introspect http://localhost:4000 |
-             rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --routing-url https://vrover-conf-account-staging.herokuapp.com/ --schema -
+        run:
+          rover subgraph introspect http://localhost:4001 |
+          rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --routing-url https://vrover-conf-account-staging.herokuapp.com/ --schema -
           # APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}

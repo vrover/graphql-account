@@ -4,7 +4,7 @@ import {
   startStandaloneServer,
 } from "@apollo/server/standalone";
 
-const port = process.env.PORT ?? "4000";
+const port = process.env.PORT ?? "4001";
 const subgraphName = require("../package.json").name;
 import {userModule} from "./schema";
 import {UserAPI} from "./datasources/user";
@@ -13,8 +13,7 @@ const mongoose = require("mongoose");
 
 
 async function main() {
-
-  mongoose.connect(`mongodb+srv://varshant:${process.env.MONGO_CONF_PASSWORD}@cluster0.rcdu4.mongodb.net/conf-ai`, {poolSize: 10});
+  mongoose.connect(`mongodb+srv://varshant:${process.env.MONGO_CONF_PASSWORD}@cluster0.rcdu4.mongodb.net/conf-ai`);
   var db = mongoose.connection;
   db.on("error", function () {console.log('Mongo error');});
   db.on('connected', function () {console.log('MongoDB Connected');});
