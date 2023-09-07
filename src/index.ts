@@ -4,7 +4,7 @@ import {
   startStandaloneServer,
 } from "@apollo/server/standalone";
 
-const port = process.env.PORT ?? "4001";
+const port = process.env.PORT ?? "8080";
 const subgraphName = require("../package.json").name;
 import {userModule} from "./schema";
 import {UserAPI} from "./datasources/user";

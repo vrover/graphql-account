@@ -1,17 +1,27 @@
 name: Staging Publish Schema
 on:
-  workflow_run:
-    workflows: ["Staging Check Schema"]
-    types:
-      - completed
+  workflow_dispatch:
+  # workflow_run:
+  #   workflows: ["Staging Check Schema"]
+  #   types:
+  #     - completed
+
 jobs:
+  get_subgraph_name:
+    uses: ./.github/workflows/apollo.yaml
+  schema_check:
+    uses: ./.github/workflows/check-schema-staging.yaml
+    secrets: inherit
   publish_schema:
+    if: github.actor == 'vrover'
     name: Publish new schema to Apollo Studio
+    needs: [get_subgraph_name, schema_check]
     runs-on: ubuntu-latest
     env:
       APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
       APOLLO_GRAPH_ID: ${{ secrets.APOLLO_GRAPH_ID }}
-      SUBGRAPH: account
+      PORT: 8080
+      ROUTING_URL: ${{ secrets.ROUTING_URL }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -29,7 +39,5 @@ jobs:
       - name: Start server
         run: npm run start & sleep 10
       - name: Publish Schema
-        run:
-          rover subgraph introspect http://localhost:4001 |
-          rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${SUBGRAPH} --routing-url https://graphql-account.onrender.com/ --schema -
-          # APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
+        run: rover subgraph introspect http://localhost:${PORT} |
+          rover subgraph publish ${APOLLO_GRAPH_ID}@staging --name ${{ needs.get_subgraph_name.outputs.name }} --routing-url ${ROUTING_URL} --schema -

@@ -31,5 +31,3 @@ jobs:
         with:
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
           api-key: ${{ secrets.RENDER_API_KEY }}
-        env:
-          MONGO_CONF_PASSWORD: ${{secrets.MONGO_CONF_PASSWORD}}
